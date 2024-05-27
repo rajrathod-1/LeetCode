@@ -1,19 +1,23 @@
 class Solution {
     public int mySqrt(int x) {
-        if (x == 0) return 0; // Early return for the edge case when x is 0.
+        int s = 0;
+        int e = x;
+        long mid;
+        int ans = 0; // Changed from long long int to int since ans should be within int range
         
-        int left = 1; // Start at 1 because we are looking for positive integer square roots.
-        int right = x; // Initialize right to x.
-        int ans = 0; // This will store our result.
-        
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
+        while (s <= e) {
+            mid = s + (e - s) / 2;
+            long square = mid * mid;
             
-            if (mid <= x / mid) { // This avoids overflow.
-                ans = mid;
-                left = mid + 1; // Search the right half.
+            if (square == x) {
+                return (int) mid; // Cast to int since we need to return an int
+            }
+            
+            if (square < x) {
+                ans = (int) mid; // Cast to int
+                s = (int) mid + 1; // Cast to int
             } else {
-                right = mid - 1; // Search the left half.
+                e = (int) mid - 1; // Cast to int
             }
         }
         
