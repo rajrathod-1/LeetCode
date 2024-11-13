@@ -1,46 +1,45 @@
 class Solution {
-    public List<Integer> spiralOrder(int[][] matrix) {
-        ArrayList<Integer> spiral = new ArrayList<>();
-
-        int left = 0;
-        int right = matrix[0].length;
+    public List<Integer> spiralOrder(int[][] mat) {
+        int n = mat.length;
+        int m = mat[0].length;
+        int left = 0; 
+        int right = m -1;
         int top = 0;
-        int bottom = matrix.length;
+        int bottom = n-1;
+        ArrayList<Integer> ans = new ArrayList<>();
 
-
-        while ((left < right) && (top < bottom)){
-
-            //get every i in the top row
-            for(int i = left; i < right; i++)
+        while(top <= bottom && left <= right)
+        {
+            for(int i = left; i <= right; i++)
             {
-                spiral.add(matrix[top][i]);
+                ans.add(mat[top][i]);
+                
             }
-            top += 1;
-
-            //get every i in the right col
-            for(int i = top; i < bottom; i++)
+            top++;
+            for(int i = top; i <= bottom; i++)
             {
-                spiral.add(matrix[i][right - 1]);
+                ans.add(mat[i][right]);
             }
-            right -= 1;
+            right--;
 
-            if(!((left < right) && (top < bottom)))
-                break;
-            
-            //get every i in the bottom row
-            for(int i = right - 1; i > left - 1; i--)
+            if(top <= bottom)
             {
-                spiral.add(matrix[bottom - 1][i]);
+                for(int i = right; i >= left; i--)
+                {
+                    ans.add(mat[bottom][i]);
+                }
+                bottom--;
             }
-            bottom -= 1;
-
-            //for every i in the left col
-            for(int i = bottom - 1; i > top - 1; i--)
+            if(left<= right)
             {
-                spiral.add(matrix[i][left]);
+                for(int i = bottom; i>= top; i--)
+                {
+                    ans.add(mat[i][left]);
+                }
+                left++;
             }
-            left += 1;
         }
-        return spiral;
+        return ans;
+        
     }
 }
