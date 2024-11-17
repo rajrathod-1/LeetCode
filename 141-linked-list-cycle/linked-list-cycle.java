@@ -10,17 +10,15 @@
  * }
  */
 public class Solution {
-    public boolean hasCycle(ListNode head) {
-        HashSet<ListNode> visitedNodes = new HashSet<>();
-
-        ListNode curr = head;
-        while(curr
-         != null)
+    public boolean hasCycle(ListNode head) {   
+        ListNode slow = head;
+        ListNode fast = head;
+        while(fast != null && fast.next != null)
         {
-            if(visitedNodes.contains(curr))
-                return true;
-            visitedNodes.add(curr);
-            curr = curr.next;
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if(slow == fast) return true;
         }
         return false;
         
