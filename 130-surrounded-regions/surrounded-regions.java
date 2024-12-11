@@ -1,62 +1,65 @@
 class Solution {
     public void solve(char[][] board) {
-
+        
         if(board == null || board.length == 0)
             return;
-
-        int m = board.length;
-        int n = board[0].length;
-
-        for(int i =0; i < m; i++)
-        {
-            if(board[i][0] == 'O')
-            {
-                dfs(board, i , 0);
-            }
-            if(board[i][n-1] == 'O')
-            {
-                dfs(board, i , n - 1);
-            }
-        }
-
-        for(int j =0; j < n; j++)
-        {
-            if(board[0][j] == 'O')
-            {
-                dfs(board, 0, j);
-            }
-            if(board[m-1][j] == 'O')
-            {
-                dfs(board, m-1, j);
-            }
-        }
-
-        for(int i = 0; i < m; i++)
-        {
-            for(int j =0; j < n; j++)
-            {
-                if(board[i][j] == 'O')
-                {
-                    board[i][j] = 'X';
-                }
-                else if(board[i][j] == 'T')
-                {
-                    board[i][j] = 'O';
-                }
-            }
-        }
         
+        int rows = board.length;
+        int col = board[0].length;
+
+        for(int r =0; r < rows; r++)
+        {
+            if(board[r][0] == 'O')
+            {
+                dfs(board, r, 0, rows, col);
+
+            }
+            if(board[r][col - 1] == 'O')
+            {
+                dfs(board, r, col -1, rows, col);
+            }
+        }
+
+        for(int c = 0; c < col; c++)
+        {
+            if(board[0][c] == 'O')
+            {
+                dfs(board, 0, c, rows, col);
+            }
+            if(board[rows - 1][c] == 'O')
+            {
+                dfs(board, rows - 1, c, rows, col);
+            }
+        }
+
+        for(int r = 0; r < rows; r++)
+        {
+            for(int c = 0; c < col; c++)
+            {
+                if(board[r][c] == 'O')
+                {
+                    board[r][c] = 'X';
+                }
+                else if(board[r][c] == 'V')
+                {
+                    board[r][c] = 'O';
+                }
+            }
+        }
+
     }
 
-    private void dfs(char[][] board, int i , int j )
+    public void dfs(char[][] board, int r, int c, int rows, int cols)
     {
-        if(i < 0 || j < 0 || i >= board.length || j >= board[0].length || board[i][j] != 'O')
+        if(r < 0 || r >= rows || c < 0 || c >= cols || board[r][c] != 'O')
+        {
             return;
+        }
+        board[r][c] = 'V';
+        dfs(board, r + 1, c, rows, cols);
+        dfs(board, r - 1, c, rows, cols);
+        dfs(board, r , c + 1, rows, cols);
+        dfs(board, r , c - 1, rows, cols);
 
-        board[i][j] = 'T';
-        dfs(board, i+1, j);
-        dfs(board, i - 1, j);
-        dfs(board, i, j+ 1);
-        dfs(board, i, j -1);
     }
 }
