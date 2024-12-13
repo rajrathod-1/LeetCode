@@ -1,25 +1,23 @@
 class Solution {
     public int removeDuplicates(int[] nums) {
-        ArrayList<Integer> expectedNums = new ArrayList<>();
-        int arrayPointer = 0;
-        int pointer = Integer.MIN_VALUE;
-        for(int i = 0; i < nums.length; i++)
+        ArrayList<Integer> temp = new ArrayList<>();
+        int duplicate = Integer.MIN_VALUE;
+        int count = 0;
+        for(int num: nums)
         {
-            if(pointer != nums[i])
+            if(duplicate != num)
             {
-                expectedNums.add(nums[i]);
-                pointer = nums[i];
-
-                //swap
-                int temp = nums[i];
-                nums[i] = nums[arrayPointer];
-                nums[arrayPointer] = temp;
-
-                arrayPointer++;
+                duplicate = num;
+                temp.add(duplicate);
+                count++;
             }
         }
 
-        return expectedNums.size();
+        for(int i = 0; i < temp.size(); i++)
+        {
+            nums[i] = temp.get(i);
+        }
+        return count;
         
     }
 }
