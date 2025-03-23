@@ -1,18 +1,11 @@
 class Solution {
     public int singleNumber(int[] nums) {
-        Map<Integer, Integer> temp = new HashMap<>();
-
-        for(int num: nums)
+        int temp = nums[0];
+        for(int i = 1; i < nums.length; i++)
         {
-            temp.put(num, temp.getOrDefault(num, 0) + 1);
+            temp ^= nums[i];
         }
 
-        for(Map.Entry<Integer, Integer> entry: temp.entrySet())
-        {
-            if(entry.getValue() == 1)
-                return entry.getKey();
-        }
-        return -1;
-        
+        return temp;
     }
 }
