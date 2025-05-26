@@ -1,45 +1,51 @@
 class Solution {
-    public List<Integer> spiralOrder(int[][] mat) {
-        int n = mat.length;
-        int m = mat[0].length;
-        int left = 0; 
-        int right = m -1;
-        int top = 0;
-        int bottom = n-1;
-        ArrayList<Integer> ans = new ArrayList<>();
+    public List<Integer> spiralOrder(int[][] matrix) {
+        int topRow = 0;
+        int bottomRow = matrix.length - 1;
+        int topCol = 0;
+        int bottomCol = matrix[0].length - 1;
 
-        while(top <= bottom && left <= right)
+        ArrayList<Integer> printArray = new ArrayList<>();
+
+        while(topRow <= bottomRow && topCol <= bottomCol)
         {
-            for(int i = left; i <= right; i++)
+            //traverse from left to right
+            for(int i = topCol; i <= bottomCol; i++)
             {
-                ans.add(mat[top][i]);
-                
+                printArray.add(matrix[topRow][i]);
             }
-            top++;
-            for(int i = top; i <= bottom; i++)
-            {
-                ans.add(mat[i][right]);
-            }
-            right--;
+            topRow++;
 
-            if(top <= bottom)
+            //traverse right Column
+            for(int i = topRow; i <= bottomRow; i++)
             {
-                for(int i = right; i >= left; i--)
-                {
-                    ans.add(mat[bottom][i]);
-                }
-                bottom--;
+                printArray.add(matrix[i][bottomCol]);
             }
-            if(left<= right)
+
+            bottomCol--;
+
+            //traverse bottom row
+            if(topRow <= bottomRow)
             {
-                for(int i = bottom; i>= top; i--)
+                for(int i = bottomCol; i>= topCol; i--)
                 {
-                    ans.add(mat[i][left]);
+                    printArray.add(matrix[bottomRow][i]);
                 }
-                left++;
+                bottomRow--;
+            }
+
+            
+            if(topCol <= bottomCol)
+            {
+                for(int i = bottomRow; i >= topRow; i--)
+                {
+                    printArray.add(matrix[i][topCol]);
+                }
+                topCol++;
             }
         }
-        return ans;
+
+        return printArray;
         
     }
 }
