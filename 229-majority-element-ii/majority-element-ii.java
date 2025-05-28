@@ -1,21 +1,22 @@
 class Solution {
     public List<Integer> majorityElement(int[] nums) {
         HashMap<Integer, Integer> map = new HashMap<>();
+        ArrayList<Integer> ans = new ArrayList<>();
 
-        for(int i = 0; i < nums.length; i++)
+        for(int i: nums)
         {
-            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+            map.put(i, map.getOrDefault(i, 0) + 1);
         }
 
-        List<Integer> majority = new ArrayList<>();
-        for(HashMap.Entry<Integer,Integer> entry: map.entrySet())
+        for(Map.Entry<Integer, Integer> entry : map.entrySet())
         {
             if(entry.getValue() > nums.length/3)
             {
-                majority.add(entry.getKey());
+                ans.add(entry.getKey());
             }
         }
-        return majority;
+        return ans;
+
         
     }
 }
