@@ -1,22 +1,34 @@
 class Solution {
     public int singleNonDuplicate(int[] nums) {
+        if(nums.length == 1)
+            return nums[0];
+        
+        if(nums[0] != nums[1])
+            return nums[0];
+        
+    int n = nums.length;
 
-        HashMap<Integer, Integer> count = new HashMap<>();
+        if(nums[n-1] != nums[n-2])
+            return nums[n-1];
 
-        for(int i: nums)
+        int low = 1;
+        int high = n-2;
+        int mid = -1;
+
+        while(low <= high)
         {
-            count.put(i, count.getOrDefault(i, 0) + 1);
-        }
+            mid = (low + high)/2;
+            if(nums[mid] != nums[mid -1] && nums[mid] != nums[mid + 1])
+                return nums[mid];
 
-        for(HashMap.Entry<Integer, Integer> entry : count.entrySet())
-        {
-            if(entry.getValue() == 1)
-            {
-                return entry.getKey();
-            }
-        }
+            if((mid%2 == 0 && nums[mid] == nums[mid + 1]) || (mid%2 == 1 && nums[mid] == nums[mid - 1]))
+                low = mid + 1;
+            else
+                high = mid - 1;
 
+        }
         return -1;
+
         
     }
 }
