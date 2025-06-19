@@ -1,26 +1,31 @@
 class Solution {
     public int mySqrt(int x) {
-        int s = 0;
-        int e = x;
-        long mid;
-        int ans = 0; // Changed from long long int to int since ans should be within int range
-        
-        while (s <= e) {
-            mid = s + (e - s) / 2;
-            long square = mid * mid;
-            
-            if (square == x) {
-                return (int) mid; // Cast to int since we need to return an int
+        int start = 0;
+        int end = x;
+        int ans = 0;
+        int mid = -1;
+        if(x == 0 || x == 1) return x;
+        while(start<=end)
+        {
+            mid = (start + end)/2;
+            long mult = (long) mid * mid;
+            if(mult == x)
+            {
+                return mid;
             }
-            
-            if (square < x) {
-                ans = (int) mid; // Cast to int
-                s = (int) mid + 1; // Cast to int
-            } else {
-                e = (int) mid - 1; // Cast to int
+
+            if(mult < x)
+            {
+                ans = mid;
+                start = mid + 1;
             }
+            else
+            {
+                end = mid - 1;
+            }
+
         }
-        
+
         return ans;
     }
 }
