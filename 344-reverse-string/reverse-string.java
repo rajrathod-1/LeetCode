@@ -1,20 +1,17 @@
 class Solution {
     public void reverseString(char[] s) {
-        int start = 0;
-        int end = s.length - 1;
-
-         reverse(s, start, end);
-
-        
+        helperFunction(s, 0, s.length - 1);
     }
-    void reverse(char[] s, int start, int end)
+
+    public void helperFunction(char[] s, int start, int end)
     {
         if(start > end)
             return;
-        char temp = s[end];
+        
+        char swap = s[end];
         s[end] = s[start];
-        s[start] = temp;
-
-        reverse(s, start + 1, end - 1);
+        s[start] = swap;
+        helperFunction(s, start+1, end-1);
+        
     }
 }
