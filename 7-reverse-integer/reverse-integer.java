@@ -1,5 +1,6 @@
 class Solution {
-    public int reverse(int x) {int temp = 0;
+    public int reverse(int x) {
+        int temp = 0;
         int reverse = 0;
         while(x != 0)
         {
@@ -11,6 +12,5 @@ class Solution {
             x = x/10;
         }
         return reverse;
-        
     }
 }
