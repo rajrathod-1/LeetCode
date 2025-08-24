@@ -1,12 +1,15 @@
 class Solution {
     public boolean isPowerOfThree(int n) {
-        if(n <= 0)
-            return false;
-        else if(n==1)
-            return true;
-        else if(n == 2)
-            return false;
-
-        return (n % 3 == 0) && isPowerOfThree(n/3);
+        return helper(n, 1);
     }
+
+    boolean helper(int n, int mult)
+    {
+        if(n == mult)
+            return true;
+        else if(mult > n/3)
+            return false;
+        return helper(n, mult * 3);
+    }
+
 }
