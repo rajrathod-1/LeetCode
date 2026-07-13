@@ -1,13 +1,24 @@
 class Solution {
     public boolean isValid(String s) {
-        if(s.isEmpty()) return true;
-        if(s.length() % 2 != 0) return false;
+        Stack<Character> st = new Stack<>();
 
-        String replaces = s.replace("()", "")
-                            .replace("{}", "")
-                            .replace("[]", "");
-        if(replaces.equals(s)) return false;
+        for(char c: s.toCharArray())
+        {
+            if(c == '(' || c == '{' || c == '[')
+                st.push(c);
+            else
+                if(st.isEmpty()) return false;
+                else if(c == ')' && st.peek() == '(')
+                    st.pop();
+                else if(c == '}' && st.peek() == '{')
+                    st.pop();
+                else if(c == ']' && st.peek() == '[')
+                    st.pop();
+                else
+                    return false;
 
-        return isValid(replaces);
+        }
+
+        return st.isEmpty();
     }
 }
