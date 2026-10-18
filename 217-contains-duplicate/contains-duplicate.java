@@ -1,17 +1,17 @@
 class Solution {
     public boolean containsDuplicate(int[] nums) {
-        Map<Integer, Integer> map = new HashMap<>();
-        for(int num: nums)
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        for(int i: nums)
         {
-            map.put(num, map.getOrDefault(num, 0)+1);
+            map.put(i, map.getOrDefault(i,0)+1);
         }
 
-        for(int num: map.values())
+        for(Map.Entry<Integer, Integer> entry: map.entrySet())
         {
-            if(num > 1)
+            if(entry.getValue() > 1)
                 return true;
         }
-
         return false;
     }
 }
