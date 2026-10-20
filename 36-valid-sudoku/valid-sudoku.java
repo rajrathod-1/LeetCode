@@ -1,64 +1,59 @@
 class Solution {
     public boolean isValidSudoku(char[][] board) {
-        int[] temp = new int[board.length];
+        int[] rows = new int[10];
 
-        //for rows
         for(int i =0; i < board.length; i++)
         {
             for(int j =0; j < board[0].length; j++)
             {
                 if(board[i][j] == '.')
                     continue;
-
-                int index = board[i][j] - '1';
-
-                temp[index]++;
-                if(temp[index] >= 2)
+                int digit = board[i][j] - '0';
+                rows[digit]++;
+                if(rows[digit] > 1)
                     return false;
             }
-            temp = new int[board.length];
+            rows = new int[10];
         }
 
-        //for column
+        //for columns
+        int[] cols = new int[10];
+
         for(int i =0; i < board.length; i++)
         {
             for(int j =0; j < board[0].length; j++)
             {
                 if(board[j][i] == '.')
                     continue;
-                    
-                int index = board[j][i] - '1';
-                temp[index]++;
-                if(temp[index] >= 2)
+                int digit = board[j][i] - '0';
+                cols[digit]++;
+                if(cols[digit] > 1)
                     return false;
             }
-            temp = new int[board.length];
+            cols = new int[10];
         }
 
-        for(int row = 0; row < 9; row += 3)
+        //for boxes
+        int[] boxes = new int[10];
+        for(int i =0; i < board.length; i+=3)
         {
-            for(int col = 0; col < 9; col += 3)
+            for(int j =0; j < board[0].length; j+= 3)
             {
-                temp = new int[9];
-
-                for(int i = row; i < row + 3; i++)
+                for(int k = i; k < i+ 3; k++)
                 {
-                    for(int j = col; j < col + 3; j++)
+                    for(int l =j; l < j + 3; l++)
                     {
-                        if(board[i][j] == '.')
+                        if(board[k][l] == '.')
                             continue;
-
-                        int index = board[i][j] - '1';
-
-                        temp[index]++;
-
-                        if(temp[index] >= 2)
+                        int digit = board[k][l] - '0';
+                        boxes[digit]++;
+                        if(boxes[digit] > 1)
                             return false;
                     }
                 }
+                boxes = new int[10];
             }
         }
-
-    return true;
+        return true;
     }
 }
