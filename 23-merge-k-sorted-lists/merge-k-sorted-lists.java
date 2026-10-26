@@ -20,22 +20,19 @@ class Solution {
                 pq.add(temp);
                 temp = temp.next;
             }
-
         }
+
         if(pq.isEmpty())
             return null;
 
-        ListNode head = pq.poll();
-        ListNode dummy = head;
-        int n = pq.size();
-
-        for(int i = 0; i < n; i++)
+        ListNode ans = pq.poll();
+        ListNode dummy = ans;
+        while(!pq.isEmpty())
         {
-            dummy.next = pq.poll();
-            dummy = dummy.next;
+            ans.next = pq.poll();
+            ans = ans.next;
         }
-        dummy.next = null;
-        return head;
-
+        ans.next = null;
+        return dummy;
     }
 }
