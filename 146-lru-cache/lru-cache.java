@@ -1,17 +1,25 @@
+class Node{
+    Node prev;
+    Node next;
+    int key;
+    int val;
+
+    public Node(){
+        this.next = null;
+        this.prev = null;
+    }
+
+    public Node(int key, int value){
+        this.val = value;
+        this.key = key;
+        this.prev = null;
+        this.next = null;
+    }
+
+}
+
 class LRUCache {
 
-    class Node{
-        Node prev;
-        Node next;
-        int key;
-        int value;
-
-        public Node(int key, int value)
-        {
-            this.key = key;
-            this.value = value;
-        }
-    }
     int capacity;
     HashMap<Integer, Node> map;
     Node head;
@@ -20,13 +28,11 @@ class LRUCache {
     public LRUCache(int capacity) {
         this.capacity = capacity;
         map = new HashMap<>();
-
-        //dummy nodes
-        head = new Node(0,0);
-        tail = new Node(0,0);
-
+        head = new Node();
+        tail = new Node();
         head.next = tail;
         tail.prev = head;
+
     }
     
     public int get(int key) {
@@ -34,43 +40,36 @@ class LRUCache {
             return -1;
         Node node = map.get(key);
         remove(node);
-        insertFront(node);
-        return node.value;
+        insert(node);
+        return node.val;
     }
     
     public void put(int key, int value) {
         if(map.containsKey(key))
-            remove(map.get(key));
-        
-        Node node = new Node(key, value);
-        map.put(key, node);
-        insertFront(node);
-
-        //if Cache size is max
-        if(map.size() > capacity)
         {
-            Node lru = tail.prev;
-            remove(lru);
-            map.remove(lru.key);
+            remove(map.get(key));
         }
+        insert(new Node(key, value));
+        if(map.size() > capacity)
+            remove(tail.prev);
     }
 
-    public void remove(Node node)
+    private void remove(Node node)
     {
-        Node previous = node.prev;
-        previous.next = node.next;
-        node.next.prev = previous;
-    }
-
-    public void insertFront(Node node)
-    {
-        Node first = head.next;
-        node.next = first;
-        first.prev = node;
-        head.next = node;
-        node.prev = head;
+        map.remove(node.key);
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
     }
     
+    private void insert(Node node)
+    {
+        map.put(node.key, node);
+        node.next = head.next;
+        node.prev = head;
+        head.next.prev = node;
+        head.next = node;
+        
+    }
 }
 
 /**
