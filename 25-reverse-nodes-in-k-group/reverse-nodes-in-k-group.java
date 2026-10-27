@@ -10,55 +10,40 @@
  */
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
-        ListNode temp = head;
-        ListNode prevLast = null;
-        while(temp != null)
+        ListNode dummy = new ListNode(0, head);
+        ListNode groupPrev = dummy;
+
+        while(true)
         {
-            ListNode kThNode = getKthNode(temp, k);
-            if(kThNode == null)
-            {
-                if(prevLast != null)
-                {
-                    prevLast.next = temp;
-                }
+            ListNode kthNode = getKthNode(groupPrev, k);
+            if(kthNode == null)
                 break;
+            ListNode groupNext = kthNode.next;
+
+            ListNode prev = kthNode.next;
+            ListNode curr = groupPrev.next;
+            while(curr != groupNext)
+            {
+                ListNode temp = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = temp;
             }
-            ListNode nextNode = kThNode.next;
-            kThNode.next = null;
-            reverseLinkedList(temp);
-            if(temp == head)
-                head = kThNode;
-            else
-                prevLast.next = kThNode;
-            prevLast = temp;
-            temp = nextNode;
+
+            ListNode temp = groupPrev.next;
+            groupPrev.next = kthNode;
+            groupPrev = temp;
         }
-        return head;
+        return dummy.next;
     }
 
-    static ListNode getKthNode(ListNode temp, int k)
+    public ListNode getKthNode(ListNode groupPrev, int k)
     {
-        k--;
-        while(temp != null && k > 0)
+        while(groupPrev != null && k > 0)
         {
+            groupPrev = groupPrev.next;
             k--;
-            temp = temp.next;
         }
-        return temp;
-    }
-
-    static ListNode reverseLinkedList(ListNode head)
-    {
-        ListNode temp = head;
-        ListNode prev = null;
-
-        while(temp != null)
-        {
-            ListNode front = temp.next;
-            temp.next = prev;
-            prev = temp;
-            temp = front;
-        }
-        return prev;
+        return groupPrev;
     }
 }
