@@ -5,7 +5,7 @@ class Solution {
 
         for(int i =0; i < nums.length; i++)
         {
-            if(!dq.isEmpty() && dq.peekFirst() <= i - k)
+            if(!dq.isEmpty() && dq.peekFirst() < i - k + 1)
                 dq.pollFirst();
             
             while(!dq.isEmpty() && nums[dq.peekLast()] < nums[i])
